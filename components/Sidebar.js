@@ -15,7 +15,7 @@ function Sidebar() {
     const userChatRef = db.collection('chats').where('users', 'array-contains', user.email);
     const [chatSnapshot] = useCollection(userChatRef);
     const [senderSnapshot] = useCollection(db.collection('users').where('email', '==', user.email));
-    const sender = senderSnapshot?.docs?.[1]?.data();
+    const sender = senderSnapshot?.docs?.[0]?.data();
 
 
     const createChat = () => {
@@ -39,12 +39,8 @@ function Sidebar() {
     return (
     <Container>
         <Header>
-            {sender ? (
             <UserAvatar onClick={() => auth.signOut()} src={sender?.photoURL}/>
-            ):
-            (
-            <UserAvatar onClick={() => auth.signOut()}>{user.email[0]}</UserAvatar>
-            )}
+
             <IconsContainer>
                 <IconButton>
                     <ChatIcon/>
